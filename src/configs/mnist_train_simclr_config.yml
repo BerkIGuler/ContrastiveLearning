@@ -1,0 +1,63 @@
+analysis:
+  num_classes: 10
+  quality_metrics:
+  - silhouette_score
+  - separation_ratio
+augmentation:
+  crop_size: 28
+  gaussian_blur_prob: 0.5
+  gaussian_blur_sigma:
+  - 0.1
+  - 2.0
+  rotation_degrees: 15
+  scale_range:
+  - 0.8
+  - 1.0
+  translate_range: 0.1
+data:
+  data_root: ./data
+  dataset: MNIST
+  max_samples_visualization: 1500
+  normalization:
+    mean:
+    - 0.1307
+    std:
+    - 0.3081
+experiment:
+  description: Studying the effect of temperature parameter on SimCLR contrastive
+    learning
+  name: MNIST SimCLR Temperature Study
+  random_seed: 42
+model:
+  architecture: SimCLREncoder
+  dropout_rate: 0.3
+  embedding_dim: 128
+  projection_dim: 64
+output:
+  base_dir: ./outputs
+  save_embeddings: true
+  save_models: true
+  save_plots: true
+training:
+  batch_size: 256
+  epochs: 10
+  learning_rate: 0.001
+  num_workers: 2
+  optimizer: Adam
+  temperatures:
+  - 0.05
+  - 0.1
+  - 0.3
+  - 0.5
+  - 0.7
+visualization:
+  max_samples: 2000
+  methods:
+  - tsne
+  - pca
+  - umap
+  plot_height: 600
+  plot_width: 800
+  tsne_perplexity: 30
+  umap_min_dist: 0.1
+  umap_n_neighbors: 15
