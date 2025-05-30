@@ -1,0 +1,56 @@
+# MNIST SimCLR Temperature Study Configuration
+# This configuration file defines all parameters for the SimCLR contrastive learning experiment
+
+experiment:
+  name: 'MNIST SimCLR Temperature Study'
+  description: 'Studying the effect of temperature parameter on SimCLR contrastive learning'
+  random_seed: 42
+
+model:
+  embedding_dim: 128          # Feature dimension before projection head
+  projection_dim: 64          # Projection head output dimension (used for contrastive loss)
+  architecture: 'SimCLREncoder'
+  dropout_rate: 0.3
+
+training:
+  temperatures: [0.05, 0.1, 0.3, 0.5, 0.7]  # Temperature values to experiment with
+  epochs: 25
+  batch_size: 256
+  learning_rate: 0.001
+  optimizer: 'Adam'           # Options: 'Adam', 'SGD'
+  num_workers: 2
+
+data:
+  dataset: 'MNIST'
+  data_root: './data'
+  max_samples_visualization: 1500
+  normalization:
+    mean: [0.1307]            # MNIST normalization values
+    std: [0.3081]
+
+augmentation:
+  rotation_degrees: 15        # Random rotation range
+  translate_range: 0.1        # Random translation as fraction of image size
+  scale_range: [0.8, 1.0]     # Random scale range for resized crop
+  crop_size: 28               # Final crop size
+  gaussian_blur_prob: 0.5     # Probability of applying Gaussian blur (SimCLR-specific)
+  gaussian_blur_sigma: [0.1, 2.0]  # Gaussian blur sigma range
+
+visualization:
+  methods: ['tsne', 'pca', 'umap']  # Dimensionality reduction methods for visualization
+  tsne_perplexity: 30
+  umap_n_neighbors: 15
+  umap_min_dist: 0.1
+  plot_height: 600
+  plot_width: 800
+  max_samples: 2000           # Maximum samples for visualization
+
+analysis:
+  quality_metrics: ['silhouette_score', 'separation_ratio']
+  num_classes: 10             # Number of MNIST classes
+
+output:
+  base_dir: './outputs'       # Base directory for all outputs
+  save_models: true           # Save trained model checkpoints
+  save_embeddings: true       # Save extracted embeddings as numpy arrays
+  save_plots: true            # Save visualization plots

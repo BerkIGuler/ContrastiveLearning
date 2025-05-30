@@ -4,7 +4,6 @@ from sklearn.datasets import fetch_openml
 from sklearn.preprocessing import StandardScaler
 import umap
 import plotly.express as px
-import plotly.graph_objects as go
 from plotly.offline import plot
 import time
 
@@ -178,7 +177,7 @@ def main():
         embedding_3d = apply_umap_3d(X_processed)
         
         # Create interactive plot
-        fig = create_interactive_plot(embedding_3d, y)
+        _ = create_interactive_plot(embedding_3d, y, output_file="../outputs/temperature/mnist_3d_umap.html")
         
         print("\n" + "=" * 50)
         print("Visualization completed successfully!")

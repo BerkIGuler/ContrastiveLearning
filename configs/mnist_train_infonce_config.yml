@@ -1,0 +1,52 @@
+# MNIST Contrastive Learning Configuration
+
+experiment:
+  name: "MNIST Contrastive Learning Temperature Study"
+  description: "Studying the effect of temperature parameter on contrastive learning"
+  random_seed: 42
+
+model:
+  embedding_dim: 32
+  architecture: "SimpleEncoder"
+  dropout_rate: 0.3
+
+training:
+  temperatures: [0.05, 0.1, 0.2, 0.3, 0.4, 0.5]  # Different temperature values to experiment with
+  epochs: 15
+  batch_size: 256
+  learning_rate: 0.001
+  optimizer: "Adam"  # Options: "Adam", "SGD"
+  num_workers: 2
+
+data:
+  dataset: "MNIST"
+  data_root: "./data"
+  max_samples_visualization: 1500
+  normalization:
+    mean: [0.1307]  # MNIST mean
+    std: [0.3081]   # MNIST std
+
+augmentation:
+  rotation_degrees: 15
+  translate_range: 0.1
+  scale_range: [0.8, 1.0]
+  crop_size: 28
+
+visualization:
+  methods: ["tsne", "pca", "umap"]
+  umap_n_neighbors: 15
+  umap_min_dist: 0.1
+  tsne_perplexity: 30
+  plot_height: 600
+  plot_width: 800
+  max_samples: 2000
+
+analysis:
+  quality_metrics: ["silhouette_score", "separation_ratio"]
+  num_classes: 10
+
+output:
+  base_dir: "./outputs"
+  save_models: true
+  save_embeddings: true
+  save_plots: true
